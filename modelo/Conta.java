@@ -1,6 +1,9 @@
 package modelo;
 
-public abstract class Conta implements InterfaceContas{
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Conta{
 	private static int SEQUENCIAL = 1;
 	protected static  int AGENCIA_PADRAO = 1;
 	
@@ -9,6 +12,7 @@ public abstract class Conta implements InterfaceContas{
 	protected int agencia;
 	protected double saldo;
 	
+	protected List<Operacao> extrato = new ArrayList<>();
 	
 	public Conta() {
 		this.numero = SEQUENCIAL++;
@@ -43,22 +47,49 @@ public abstract class Conta implements InterfaceContas{
 	}
 	
 	
-	@Override
+	
+	protected List<Operacao> getExtrato() {
+		return this.extrato;
+	}
+	
+	public void imprimirEtrato() {
+		System.out.println("********** Extrato da Conta **********");
+		System.out.println("Conta " + this.getNumero() + " | Agencia " + this.getAgencia());
+		this.extrato.forEach(opr -> System.out.println(opr));
+		System.out.println("**********  Fim do Extrato  **********");
+	}
+
+	
 	public void sacar(double valor) {
 		this.setSaldo(getSaldo() - valor);
+		
+		Operacao opr = new Operacao();
+		opr.setDescricao("Saque");
+		opr.setValor(valor);
+		this.extrato.add(opr);
 	}
 	
 	
-	@Override
+	
 	public void depositar(double valor){
 		this.setSaldo(getSaldo() + valor);
+		
+		Operacao opr = new Operacao();
+		opr.setDescricao("Deposito");
+		opr.setValor(valor);
+		this.extrato.add(opr);
 	}
 	
 	
-	@Override
+	
 	public void transferir(double valor, Conta contaDestino) {
 		this.sacar(valor);
 		contaDestino.depositar(valor);
+		
+		Operacao opr = new Operacao();
+		opr.setDescricao("Transferencia");
+		opr.setValor(valor);
+		this.extrato.add(opr);
 
 	}
 

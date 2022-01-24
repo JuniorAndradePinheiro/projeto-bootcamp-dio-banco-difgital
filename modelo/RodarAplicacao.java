@@ -28,7 +28,11 @@ public class RodarAplicacao {
 		
 		banco.getListaContas().forEach(conta -> System.out.println(conta));
 		
+		System.out.println(banco.getListaContas());
 		
+		contaCorrente.imprimirEtrato();
+		
+		contaPoupanca.imprimirEtrato();
 	}
 
 }

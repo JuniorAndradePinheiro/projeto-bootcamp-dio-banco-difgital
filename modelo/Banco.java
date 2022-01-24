@@ -35,4 +35,9 @@ public class Banco {
 	public List<Conta> getListaContas(){
 		return this.listaContas;
 	}
+
+	@Override
+	public String toString() {
+		return "Banco [nome=" + nome + ", listaContas=" + listaContas + "]";
+	}
 }
